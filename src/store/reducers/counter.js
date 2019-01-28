@@ -1,4 +1,5 @@
-import * as actionTypes from '../actions/actions'
+import * as actionTypes from '../actions/actionTypes'
+import {updateObject} from '../util';
 
 const initialState = {
     counter: 0,
@@ -12,40 +13,18 @@ const reducer = (state = initialState, action) => {
             const newState = Object.assign({}, state);
             newState.counter = state.counter + 1;
             return newState
-            break;
         case actionTypes.DECREMENT:
-            return {
-                ...state,
-                counter: state.counter - 1,
-            }
-            break;
+            return updateObject(state,{counter: state.counter - 1})
         case actionTypes.ADD:
-            return {
-            ...state,
-            counter: state.counter + action.value
-        }
-            break;
+            return updateObject(state,{counter: state.counter + action.value})
         case actionTypes.SUBTRACT:
-            return {
-            ...state,
-            counter: state.counter + action.value
-        }
-            break;
+            return updateObject(state,{counter: state.counter - action.value})
         case actionTypes.STORE_RESULT:
-            return {
-            ...state,
-            results:state.results.concat({id:new Date(),value:state.counter}),
-        }
-            break;
+            return updateObject(state,{results:state.results.concat({id:new Date(),value:state.counter})})
         case actionTypes.DELETE_RESULT:
             const updatedArray = state.results.filter(result => result.id !== action.resultElId);
-            return {
-            ...state,
-            results:updatedArray,
-        }
-            break;
+            return updateObject(state,{results:updatedArray})
     }
-
     return state;  
 };
 
